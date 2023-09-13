@@ -33,16 +33,18 @@ class MainViewModel: ViewModel() {
                     val responseBody = response.body()
                     _dataProfile.value = responseBody!!.items as List<ItemsItem>
                 } else {
-                    Log.d("TAG", "onResponse: ${response.message()}")
+                    Log.d("TAG", "onResponse: ${response.toString()}")
                 }
 
             }
 
             override fun onFailure(call: Call<GitResponse>, t: Throwable) {
                 _loading.value = false
-                Log.d("TAG", "onResponse: ${t.message}")
+                Log.d("TAG", "onError: ${t.message}")
             }
 
         })
     }
+
+
 }

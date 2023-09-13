@@ -2,4 +2,8 @@
     <string name="app_name">Submission</string>
     <string name="sv_roma">Roma</string>
     <string name="sv_search">Search</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tab_1">Followers</string>
+    <string name="tab_2">Following</string>
 </resources>

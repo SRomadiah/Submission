@@ -1,7 +1,9 @@
 package com.example.submission.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -24,9 +26,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val LayoutManager = LinearLayoutManager(this)
-        binding.rvListItem.layoutManager = LayoutManager
-        val itemDecoration = DividerItemDecoration(this, LayoutManager.orientation)
+        val layoutManager = LinearLayoutManager(this)
+        binding.rvListItem.layoutManager = layoutManager
+        val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
         binding.rvListItem.addItemDecoration(itemDecoration)
 
         MainViewModel.Loading.observe(this){
@@ -38,12 +40,28 @@ class MainActivity : AppCompatActivity() {
 
         with(binding) {
             searchView.setupWithSearchBar(searchBar)
+            searchView.editText.setOnEditorActionListener {v, actionId, event ->
+                searchBar.text = searchView.text
+                searchView.hide()
+                MainViewModel.findGitUser(searchView.text.toString())
+                false
+            }
         }
+
     }
     fun setUserData(dataUser : List<ItemsItem>){
         val adapter = Adapter()
         adapter.submitList(dataUser)
         binding.rvListItem.adapter = adapter
+
+        adapter.seOnItemClickCallback(object : Adapter.OnItemClickCallback{
+            override fun onItemClickced(data: ItemsItem) {
+                val intentDetail = Intent(this@MainActivity, DetailActivity::class.java)
+                intentDetail.putExtra("username", data.login)
+                startActivity(intentDetail)
+            }
+
+        })
 
     }
     fun loading(isLoading : Boolean){

@@ -10,15 +10,27 @@ import com.example.submission.data.response.ItemsItem
 import com.example.submission.databinding.DataItemsBinding
 
 class Adapter: ListAdapter<ItemsItem, Adapter.MyViewHolder>(DIFF_CALLBACK) {
+
+    private lateinit var onItemClickCallback: OnItemClickCallback
+    interface OnItemClickCallback {
+
+        fun onItemClickced(data: ItemsItem)
+    }
+//    membuat fungsi click
+    fun seOnItemClickCallback(onItemClickCallback: OnItemClickCallback){
+        this.onItemClickCallback = onItemClickCallback
+    }
     class MyViewHolder(val binding: DataItemsBinding):RecyclerView.ViewHolder(binding.root) {
 
         fun bind(display:ItemsItem){
-            binding.textView.text=display.login
+            binding.username.text=display.login
             Glide.with(binding.root.context)
 //                    ambil data dari github
                 .load(display.avatarUrl)
 //                    menyimpan data ke layout
-                .into(binding.imageView)
+                .into(binding.profileUser)
+
+
         }
     }
 
@@ -26,10 +38,12 @@ class Adapter: ListAdapter<ItemsItem, Adapter.MyViewHolder>(DIFF_CALLBACK) {
         val binding = DataItemsBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return MyViewHolder(binding)
     }
-
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
        val dataItems = getItem(position)
         holder.bind(dataItems)
+        holder.itemView.setOnClickListener{
+            onItemClickCallback.onItemClickced(getItem(holder.adapterPosition))
+        }
     }
     companion object {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ItemsItem>(){
@@ -44,5 +58,7 @@ class Adapter: ListAdapter<ItemsItem, Adapter.MyViewHolder>(DIFF_CALLBACK) {
         }
     }
 }
+
+
 
 
