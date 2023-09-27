@@ -23,7 +23,7 @@ class MainViewModel: ViewModel() {
     init {
         findGitUser()
     }
-    fun findGitUser(userGit:String = ""){
+    fun findGitUser(userGit:String = "Roma"){
         _loading.value = true
         val user = ApiConfig.getApiService().getGitUser(userGit)
         user.enqueue(object : Callback<GitResponse>{

@@ -34,7 +34,10 @@ class FollowersFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         viewModelFollowers = ViewModelProvider(requireActivity()).get(ViewModelFollowers::class.java)
-        return inflater.inflate(R.layout.fragment_followers, container, false)
+
+        _binding = FragmentFollowersBinding.inflate(inflater,container, false)
+
+        return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,6 +45,11 @@ class FollowersFragment : Fragment() {
         binding.rvFollowersDetail.layoutManager = LinearLayoutManager(requireActivity())
 
         viewModelFollowers.listFollowers.observe(requireActivity()) {
+            val adapter = FollowersAdapter()
+            adapter.submitList(it)
+            binding.rvFollowersDetail.adapter = adapter
+        }
+        viewModelFollowers.listFollowing.observe(requireActivity()) {
             val adapter = FollowersAdapter()
             adapter.submitList(it)
             binding.rvFollowersDetail.adapter = adapter

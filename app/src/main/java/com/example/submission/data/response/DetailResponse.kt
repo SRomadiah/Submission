@@ -99,47 +99,11 @@ data class DetailResponse(
 
 	@field:SerializedName("node_id")
 	val nodeId: String? = null
-) : List<FollowersResponse> {
-	override val size: Int
-		get() = TODO("Not yet implemented")
+)
 
-	override fun contains(element: FollowersResponse): Boolean {
-		TODO("Not yet implemented")
-	}
 
-	override fun containsAll(elements: Collection<FollowersResponse>): Boolean {
-		TODO("Not yet implemented")
-	}
 
-	override fun get(index: Int): FollowersResponse {
-		TODO("Not yet implemented")
-	}
 
-	override fun indexOf(element: FollowersResponse): Int {
-		TODO("Not yet implemented")
-	}
 
-	override fun isEmpty(): Boolean {
-		TODO("Not yet implemented")
-	}
 
-	override fun iterator(): Iterator<FollowersResponse> {
-		TODO("Not yet implemented")
-	}
 
-	override fun lastIndexOf(element: FollowersResponse): Int {
-		TODO("Not yet implemented")
-	}
-
-	override fun listIterator(): ListIterator<FollowersResponse> {
-		TODO("Not yet implemented")
-	}
-
-	override fun listIterator(index: Int): ListIterator<FollowersResponse> {
-		TODO("Not yet implemented")
-	}
-
-	override fun subList(fromIndex: Int, toIndex: Int): List<FollowersResponse> {
-		TODO("Not yet implemented")
-	}
-}

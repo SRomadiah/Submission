@@ -25,7 +25,8 @@ class FollowersAdapter : ListAdapter<FollowersResponseItem, FollowersAdapter.Fol
     inner class FollowersViewHolder(private val binding: DataItemsBinding): RecyclerView.ViewHolder(binding.root) {
 
         fun bind(followers: FollowersResponseItem){
-            binding.username.text = followers.toString()
+
+            binding.username.text = followers.login
             Glide.with(binding.root.context)
 //                    ambil data dari github
                 .load(followers.avatarUrl)
