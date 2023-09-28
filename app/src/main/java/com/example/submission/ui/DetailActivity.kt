@@ -32,9 +32,10 @@ class DetailActivity : AppCompatActivity() {
         binding= ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val preference = SettingPreference.getInstance(dataStore)
 
         val getUsername = intent.getStringExtra("username")
-        viewModelFollowers = ViewModelProvider(this, FollowersViewModelFactory.getInstance(this, getUsername!!, this@DetailActivity.application))[ViewModelFollowers::class.java]
+        viewModelFollowers = ViewModelProvider(this, FollowersViewModelFactory.getInstance(this, getUsername!!, this@DetailActivity.application, preference))[ViewModelFollowers::class.java]
 
         viewModelFollowers.Loading.observe(this){
             showLoading(it)
@@ -58,9 +59,7 @@ class DetailActivity : AppCompatActivity() {
 
         Log.d("TAG", "onCreate: $getUsername")
 
-        var favoritedUser : FavoriteEntity = FavoriteEntity(
-
-        )
+        var favoritedUser : FavoriteEntity = FavoriteEntity()
 
         viewModelFollowers.getAllFavoriteUser().observe(this){
             it.forEach{

@@ -18,10 +18,11 @@ import retrofit2.Response
 
 class ViewModelFollowers(
     var username: String,
-    application: Application
+    application: Application,
     ): ViewModel() {
 
-        private val mFavoriteRepository: FavoriteRepository = FavoriteRepository(application)
+
+    private val mFavoriteRepository: FavoriteRepository = FavoriteRepository(application)
 
         private val _detailUser = MutableLiveData<DetailResponse>()
         val dataDetailUser: LiveData<DetailResponse> = _detailUser
@@ -149,7 +150,8 @@ class ViewModelFollowers(
 
 class FollowersViewModelFactory private constructor(
     private val selectedUser: String,
-    private val mApplication: Application
+    private val mApplication: Application,
+    private val preference: SettingPreference
 ) :
     ViewModelProvider.Factory {
 
@@ -157,11 +159,12 @@ class FollowersViewModelFactory private constructor(
         @Volatile
         private var instance: FollowersViewModelFactory? = null
 
-        fun getInstance(context: Context, selectedUser: String, mApplication: Application): FollowersViewModelFactory =
+        fun getInstance(context: Context, selectedUser: String, mApplication: Application, preference: SettingPreference): FollowersViewModelFactory =
             instance ?: synchronized(this) {
                 instance ?: FollowersViewModelFactory(
                     selectedUser,
-                    mApplication
+                    mApplication,
+                    preference
                 )
             }
     }
@@ -171,6 +174,12 @@ class FollowersViewModelFactory private constructor(
         when {
             modelClass.isAssignableFrom(ViewModelFollowers::class.java) -> {
                 ViewModelFollowers(selectedUser, mApplication) as T
+            }
+            modelClass.isAssignableFrom(FavoriteViewModel::class.java) -> {
+                FavoriteViewModel(mApplication) as T
+            }
+            modelClass.isAssignableFrom(SettingViewModel::class.java) -> {
+                SettingViewModel(preference) as T
             }
 
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
